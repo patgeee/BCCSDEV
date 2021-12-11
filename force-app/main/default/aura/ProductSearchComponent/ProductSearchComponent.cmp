@@ -1,0 +1,69 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller="ProductSearchComponentController">
+
+    <aura:attribute type="List" name="productList"/>
+    <aura:attribute type="boolean" name="isSearchKey" default="true"/>
+    <aura:attribute type="List" name="proList"/>
+    <aura:attribute type="String" name="searchKey"/>  
+    <aura:attribute type="List" name="warehouseList"/> 
+    
+    <aura:handler value="{!this}" name="init" action="{!c.onInit}"/>
+    
+    <div>
+        <lightning:card title="Search">
+            <div class="searchdiv">
+                <lightning:input class="searchinput" type="text" name="searchKey" aura:id="searchKey" placeholder="Search" value="{!v.searchKey}"/>
+                <lightning:button label="Search" onclick="{!c.onclickSearch}"/>
+            </div>
+        </lightning:card>
+ 
+        <aura:if isTrue="{!v.isSearchKey}"> 
+            <lightning:card class="searchResultCard">
+                <table>
+                    <tr>
+                         <th>Product Name</th>
+                         <th>Product Code</th>
+                    </tr>
+                    <aura:iteration items="{!v.productList}" var="pro">
+                         <tr>
+                             <td>{!pro.Name}</td>
+                             <td>{!pro.Product_Code__c}</td>
+                         </tr>
+                     </aura:iteration>
+                     </table>   
+            </lightning:card>
+            <aura:set attribute="else">
+                <lightning:card class="searchResultCard">
+                    <div class="filterselect">
+                        <lightning:select aura:id="select" name="select" label="Filter by Warehouse" onchange="{!c.onchangeFilter}">
+                            <option value="">-- None --</option>
+                            <aura:iteration items="{!v.warehouseList}" var="war">
+                                <option value="{!war.Id}" text="{!war.Name}"></option>
+                            </aura:iteration>
+                        </lightning:select>        
+                    </div>
+                    <div class="cleardiv">                
+                        <lightning:button label="Clear" onclick="{!c.onInit}"/>
+                    </div>
+                        <table>
+                            <tr>
+                              <th>Inventory Name</th>
+                              <th>Product Name</th>
+                              <th>Warehouse Name</th>
+                              <th>Amount Available</th>
+                            </tr>
+                            <aura:iteration items="{!v.proList}" var="pro">
+                            <tr>
+                              <td>{!pro.Name}</td>
+                              <td>{!pro.Product__r.Name}</td>
+                              <td>{!pro.Warehouse__r.Name}</td>
+                              <td>{!pro.Amount_Available__c}</td>
+                            </tr>
+                            </aura:iteration>
+                        </table>
+                </lightning:card>
+            </aura:set>
+        </aura:if>
+
+    </div>
+    
+</aura:component>

@@ -1,0 +1,40 @@
+.THIS th {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.THIS table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.THIS td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.THIS .productForm{
+    padding: 20px;
+}
+
+.THIS .prodItem{
+    margin: 3px 0px 3px 0px;
+}
+
+.THIS .save{
+	display: flex;
+    justify-content: flex-end;
+    margin-top: -54px;
+}
+
+.THIS .buttons{
+    display: flex;
+    justify-content: center;
+    margin: 23px 0px -5px 0px;
+}
+
+.THIS .cancelButtons{
+	display: flex;
+    justify-content: center;
+    margin: -30px 0px 40px 0px;
+}

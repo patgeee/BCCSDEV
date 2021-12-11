@@ -1,0 +1,48 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller="NewProductController" >
+    
+    <aura:attribute type="Product_Item__c" name="prodItem" default="{}" />
+    <aura:attribute type="List" name="warehouseList" />
+    <aura:attribute type="Boolean" name="isAddForm" default="false" />
+    <aura:attribute type="Integer" name="amountCount" default="0"/>
+    
+    <div>
+        <lightning:card title="New Product">
+            <div class="productForm">
+                <div class="save">
+                	<lightning:button label="Save" variant="brand" onclick="{!c.onClickSave}" />
+                </div>
+                    
+                <lightning:input class="prodItem" type="text" value="{!v.prodItem.Name}" label="Product Name" />
+                <lightning:input class="prodItem" type="text" value="{!v.prodItem.Product_Code__c}" label="Product Code" />
+                
+                <div class="buttons">
+                    <lightning:button label="Add Inventory" variant="brand" onclick="{!c.onClickAdd}" />
+                    <lightning:button label="Clear" variant="brand-outline" onclick="{!c.onClickClear}" />
+                </div>
+                
+            </div>
+        </lightning:card>
+        
+        <aura:if isTrue="{!v.isAddForm}">
+            <lightning:card title="New Inventory">
+                <div class="productForm">
+                    <div class="cancelButtons">
+                        <lightning:button label="Cancel" variant="brand-outline" onclick="{!c.onClickCancel}" />
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Warehouse</th>
+                            <th>Amount</th>
+                        </tr>
+                        <aura:iteration items="{!v.warehouseList}" var="wh">
+                            <tr>
+                                <td>{!wh.Name}</td>
+                                	<td><lightning:input type="number" name="" disabled="false" value="{!wh.invCount}" label="" /></td>
+                            </tr>
+                        </aura:iteration>
+                    </table>
+                </div>
+            </lightning:card>
+        </aura:if>
+    </div>
+</aura:component>

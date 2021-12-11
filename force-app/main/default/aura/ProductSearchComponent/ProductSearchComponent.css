@@ -1,0 +1,40 @@
+.THIS th {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.THIS table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.THIS td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.THIS .filterselect{
+    display: inline-flex; 
+    float: left;
+    margin-bottom: 20px; 
+    margin-top: -20px; 
+}
+
+.THIS .cleardiv {
+    display: flex; 
+    justify-content: flex-end; 
+    margin-right: 20px;
+}
+
+.THIS .searchdiv {
+    padding: 0px 20px 0px 20px; 
+    display: flex; 
+    align-items: flex-end;
+}
+
+.THIS .searchinput {
+    width: 100%; 
+    margin-right: 10px;
+}
+.THIS .searchResultCard{
+    padding: 20px;
+}

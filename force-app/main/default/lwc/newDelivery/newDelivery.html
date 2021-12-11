@@ -1,0 +1,196 @@
+<template>
+    <lightning-card title="New Delivery">
+        <div class="slds-m-around_large">
+
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <div class="slds-m-bottom_x-small">
+                        <lightning-combobox
+                            name="From Warehouse"
+                            label="From Warehouse"
+                            value={selectedType}
+                            options={selectOptions}
+                            onchange={onSelectFromWarehouse}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+                <div class="slds-col">
+                    <div class="slds-m-bottom_x-small">
+                        <lightning-combobox
+                            name="To Warehouse"
+                            label="To Warehouse"
+                            value={toSelectedType}
+                            options={toSelectOptions}
+                            onchange={onSelectToWarehouse}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-m-bottom_x-small">
+                <lightning-combobox
+                    name="Route"
+                    label="Route"
+                    value={routeSelectedType}
+                    options={routeSelectOptions}
+                    onchange={onSelectRoute}>
+                </lightning-combobox>
+            </div>
+
+
+            <template if:true={displayTime}>
+                <div class="slds-m-bottom_x-small">
+                    <p><b>Estimate Time of Arrival is : {eta} minutes </b></p>
+                </div>
+            </template>
+
+            <div class="slds-m-vertical_small">
+                <lightning-button label="Show Trucks" icon-name="utility:chevrondown" onclick={showTrucks}></lightning-button>
+            </div>
+
+            <template if:true={displayAvailTrucks}>
+                <div class="slds-m-vertical_x-large">
+                    <p style="margin-bottom: 10px;"><b>Available Trucks</b></p>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+                        <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Truck Name">Truck Name</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Current Location">Current Location</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Status">Status</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Driver">Driver</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Action">Action</div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <template for:each={availTrucks} for:item="availTruck">
+
+                            <tr class="slds-hint-parent" key={availTruck.id}>
+                                <td data-label="Truck Name">
+                                    <div class="slds-truncate" title="Truck Name">{availTruck.Name}</div>
+                                </td>
+                                <td data-label="Truck Current Location">
+                                    <div class="slds-truncate" title="Truck Current Location">{availTruck.Current_Location__r.Name}</div>
+                                </td>
+                                <td data-label="Truck Status">
+                                    <div class="slds-truncate" title="Truck Status">{availTruck.Status__c}</div>
+                                </td>
+                                <td data-label="Truck Driver">
+                                    <div class="slds-truncate" title="Truck Driver">{availTruck.Driver__r.Name}</div>
+                                </td>
+                                <td data-label="Action" style="float: left;">
+                                    <div class="slds-truncate">
+                                        <lightning-button icon-name="utility:connected_apps" label="Select" variant="brand" class="slds-align_absolute-center" onclick={selectTruckEvent} data-id={availTruck.Id}> </lightning-button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template> 
+                        </tbody>
+                    </table>
+                </div>
+                
+                <p style="margin-bottom: 10px;"><b>Not - Available Trucks</b></p>
+
+
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Truck Name">Truck Name</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Current Location">Current Location</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Status">Status</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Driver">Driver</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Action">Action</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <template for:each={notAvailTrucks} for:item="notAvailTruck">
+                        <tr class="slds-hint-parent" key={notAvailTruck.id}>
+                            <td data-label="Truck Name">
+                                <div class="slds-truncate" title="Truck Name">{notAvailTruck.Name}</div>
+                            </td>
+                            <td data-label="Truck Current Location">
+                                <div class="slds-truncate" title="Truck Current Location">{notAvailTruck.Current_Location__r.Name}</div>
+                            </td>
+                            <td data-label="Truck Status">
+                                <div class="slds-truncate" title="Truck Status">{notAvailTruck.Status__c}</div>
+                            </td>
+                            <td data-label="Truck Driver">
+                                <div class="slds-truncate" title="Truck Driver">{notAvailTruck.Driver__r.Name}</div>
+                            </td>
+                            <td data-label="Action">
+                                <div class="slds-truncate">
+                                    <p><b>ON DELIVERY</b></p>
+                                </div>
+                            </td>
+                        </tr>
+                    </template> 
+                    </tbody>
+                </table>
+            </template>
+        </div>
+    </lightning-card>
+    
+    
+
+<template if:true={displayProdInv}>
+    <div class="slds-m-top_medium">
+        <lightning-card title="Product Inventory">
+            <div class="slds-p-around_large">
+                <div class="slds-m-vertical_large">
+                    <div style="display: flex; justify-content: flex-end; padding-right: 20px; margin-top: -50px; margin-bottom: 30px;">
+                        <div class="slds-m-left_large">
+                            <lightning-button label="Save Record" variant="brand" onclick={saveRecord}></lightning-button>
+                        </div>
+                    </div>
+                </div>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Product Inventory Name">Product Inventory Name</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Product Amount Available">Product Amount Available</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={productInv} for:item="proInv">
+                            <tr class="slds-hint-parent" key={proInv.id}>
+                                <td data-label="Product Inventory Name">
+                                    <div class="slds-truncate" title="Product Inventory Name">{proInv.Name}</div>
+                                </td>
+                                <td data-label="Product Inventory Amount Available">
+                                    <lightning-input type="text" id={proInv.Id} data-inputid={proInv.Id} value="" onchange={amountSaveRec}></lightning-input>
+                                </td>
+                            </tr>
+                        </template> 
+                    </tbody>
+                </table>
+            </div>
+        </lightning-card>
+    </div>
+        
+</template>
+
+</template>
